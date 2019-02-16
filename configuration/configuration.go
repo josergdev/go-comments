@@ -12,7 +12,7 @@ import (
 )
 
 // Configuration model for config.json
-type Configuration struct {
+type configuration struct {
 	Server   string
 	Port     string
 	User     string
@@ -21,8 +21,8 @@ type Configuration struct {
 }
 
 // GetConfiguration read config.json and parse it to Configuration struct
-func GetConfiguration() Configuration {
-	var config Configuration
+func getConfiguration() configuration {
+	var config configuration
 	file, err := os.Open("./config.json")
 	if err != nil {
 		log.Fatal(err)
@@ -39,7 +39,7 @@ func GetConfiguration() Configuration {
 
 // GetConnection returns connection to the configured database
 func GetConnection() *gorm.DB {
-	c := GetConfiguration()
+	c := getConfiguration()
 
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", c.User, c.Password, c.Server, c.Port, c.Database)
 
